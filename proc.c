@@ -538,8 +538,8 @@ void
 crsp(void){
   struct proc *p = myproc();  //get the process
   acquire(&ptable.lock);  //acquire lock
-  printf(1, "name    pid     state\n");   //actual UI formatting
-  printf(1, "-----------------------\n");
+  cprintf("name    pid     state\n");   //actual UI formatting
+  cprintf("-----------------------\n");
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){ //loop through the process table
     switch(p->state){   //print different statements based on the state
       case SLEEPING:
