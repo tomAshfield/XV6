@@ -10,11 +10,10 @@
 #include "param.h"
 #include "memlayout.h"
 #include "mmu.h"
-#include "x86.h"
 
 int ps(){
-    printf("name    pid     state\n");   //actual UI formatting
-    printf("-----------------------\n");
+    printf("%s","name    pid     state\n");   //actual UI formatting
+    printf("%s","-----------------------\n");
     crsp();     //run the crsp function to print the data on the table
     exit();     //end of execution
 }
