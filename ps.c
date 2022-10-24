@@ -2,12 +2,6 @@
 #include "types.h"
 #include "stat.h"
 #include "user.h"
-#include "proc.h"
-#include "proc.c"
-#include "sysproc.c"
-#include "syscall.h"
-#include "defs.h"
-#include "param.h"
 
 int ps(){
     cprintf("name    pid     state\n");   //actual UI formatting
