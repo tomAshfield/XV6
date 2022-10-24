@@ -13,8 +13,8 @@
 #include "x86.h"
 
 int ps(){
-    print("name    pid     state\n");   //actual UI formatting
-    print("-----------------------\n");
+    printf("name    pid     state\n");   //actual UI formatting
+    printf("-----------------------\n");
     crsp();     //run the crsp function to print the data on the table
     exit();     //end of execution
 }
