@@ -543,10 +543,10 @@ crsp(void){
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){ //loop through the process table
     switch(p->state){   //print different statements based on the state
       case SLEEPING:
-        printf(1, "%s  %d  SLEEPING\n", p->name, p->pid); //if sleeping
+        cprintf("%s  %d  SLEEPING\n", p->name, p->pid); //if sleeping
         break;
       case RUNNING:
-        printf(1, "%s  %d  RUNNING\n", p->name, p->pid); //if running
+        cprintf("%s  %d  RUNNING\n", p->name, p->pid); //if running
         break;
       default: //if neither sleeping nor running, could add the other 3 cases if needed
         break;
