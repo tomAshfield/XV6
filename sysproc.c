@@ -90,9 +90,10 @@ sys_uptime(void)
   return xticks;
 }
 
-void
+int
 sys_crsp(void)
 {
   //should print out the table without the name, pid, state interface
   crsp(); //call the function from proc.c
+  return 0;
 }
