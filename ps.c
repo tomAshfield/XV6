@@ -3,7 +3,7 @@
 #include "user.h"
 
 int ps(){
-    cprintf("here");
+    printf(1, "here");
     crsp();     //run the crsp function to print the data on the table
     exit();     //end of execution
     return 0;
