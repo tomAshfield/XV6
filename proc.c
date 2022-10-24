@@ -536,13 +536,11 @@ procdump(void)
 
 void
 crsp(){
-  cprintf("Made it to here");
   struct proc *p;  //get the process
   acquire(&ptable.lock);  //acquire lock
   cprintf("name    pid     state\n");   //actual UI formatting
   cprintf("-----------------------\n");
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){ //loop through the process table
-    cprintf("here too");
     switch(p->state){   //print different statements based on the state
       case SLEEPING:
         cprintf("%s  %d  SLEEPING\n", p->name, p->pid); //if sleeping
