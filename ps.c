@@ -1,4 +1,3 @@
-//Where the user program code will go
 #include "types.h"
 #include "stat.h"
 #include "user.h"
