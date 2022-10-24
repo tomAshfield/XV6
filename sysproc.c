@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "proc.c"
 
 int
 sys_fork(void)
@@ -94,5 +95,6 @@ int
 sys_crsp(void)
 {
   //should print out the table without the name, pid, state interface
-  return;
+  crsp(); //call the function from proc.c
+  return 0;
 }
