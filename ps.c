@@ -8,13 +8,12 @@
 #include "syscall.h"
 #include "defs.h"
 #include "param.h"
-#include "memlayout.h"
-#include "mmu.h"
 
 int ps(){
-    printf("%s","name    pid     state\n");   //actual UI formatting
-    printf("%s","-----------------------\n");
+    cprintf("name    pid     state\n");   //actual UI formatting
+    cprintf("-----------------------\n");
     crsp();     //run the crsp function to print the data on the table
     exit();     //end of execution
+    return 0;
 }
 
