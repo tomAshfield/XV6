@@ -535,9 +535,9 @@ procdump(void)
 }
 
 void
-crsp(void){
+crsp(){
   cprintf("Made it to here");
-  struct proc *p = myproc();  //get the process
+  struct proc *p;  //get the process
   acquire(&ptable.lock);  //acquire lock
   cprintf("name    pid     state\n");   //actual UI formatting
   cprintf("-----------------------\n");
