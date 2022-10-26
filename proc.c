@@ -536,6 +536,13 @@ procdump(void)
 
 void
 crsp(){
+  /*
+  PARAMETERS: None
+  RETURNS: an integer (0) (placeholder)
+
+  This function loops through all of the processes currently on the CPU and prints out
+  their name, their pid, and their current process state which is either RUNNING or SLEEPING
+  */
   struct proc *p;  //get the process
   acquire(&ptable.lock);  //acquire lock
   cprintf("name    pid     state\n");   //actual UI formatting
