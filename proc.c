@@ -88,8 +88,8 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-  p->priority = 3;
-  p->remaining = 8;
+  p->queuenumber = 3;
+  p->iterationcount = 8;
   p->idle = 0;
 
   release(&ptable.lock);
@@ -326,7 +326,10 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct proc *q;
   struct cpu *c = mycpu();
+  int qn;
+  
   c->proc = 0;
   
   for(;;){
@@ -336,12 +339,62 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->state != RUNNABLE)
+      
+      for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
+        if(q->idle > q->iterationcount && q->queuenumber != 3){ //if it has been idle for longer than it needs to run, move up in priority
+          if(q->queuenumber == 2){  //moving up in priority
+            q->queuenumber = 3;
+          }else if(q->queuenumber == 1){
+            q->queuenumber = 2;
+          }else if(q->queuenumber == 0){
+            q->queuenumber = 1;
+          }else{
+            q->queuenumber = 0;
+          }
+          q->idle = 0;  //reseting idle time
+          if(q->queuenumber == 3){  //updating iteration count for new level
+            q->iterationcount = 8;
+          }else if(q->queuenumber == 2){
+            q->iterationcount = 16  ;
+          }else if(q->queuenumber == 1){
+            q->iterationcount = 24;
+          }else if(q->queuenumber == 0){
+            q->iterationcount = 500;
+          }
+        }
+        if(q->iterationcount == 0){ //if it is out of iterations for that level
+          if(q->queuenumber == 3){  //move down in priority
+            q->queuenumber = 2;
+          }else if(q->queuenumber == 2){
+            q->queuenumber = 1;
+          }else if(q->queuenumber == 1){
+            q->queuenumber = 0;
+          }else{
+            q->queuenumber = 0;
+          }
+          q->idle = 0;  //reset idle time
+          if(q->queuenumber == 2){  //update iteration count for the new level
+            q->iterationcount = 16  ;
+          }else if(q->queuenumber == 1){
+            q->iterationcount = 24;
+          }else if(q->queuenumber == 0){
+            q->iterationcount = 500;
+          }
+        }
+        if(q->queuenumber > qn){  //update our max priority level
+          qn = q->queuenumber;
+        }
+        q->idle++;  //add one tick to every process
+      }
+      
+      if(p->state != RUNNABLE || p->queuenumber != qn) //must be runnable and of the max queue
         continue;
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
+      p->idle = 0;
+      p->iterationcount--;
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
