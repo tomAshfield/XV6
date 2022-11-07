@@ -344,42 +344,34 @@ scheduler(void)
         if(q->idle > q->iterationcount && q->queuenumber != 3){ //if it has been idle for longer than it needs to run, move up in priority
           if(q->queuenumber == 2){  //moving up in priority
             q->queuenumber = 3;
+            q->iterationcount = 8;
           }else if(q->queuenumber == 1){
             q->queuenumber = 2;
+            q->iterationcount = 16;
           }else if(q->queuenumber == 0){
             q->queuenumber = 1;
+            q->iterationcount = 24;
           }else{
             q->queuenumber = 0;
+            q->iterationcount = 500;
           }
           q->idle = 0;  //reseting idle time
-          if(q->queuenumber == 3){  //updating iteration count for new level
-            q->iterationcount = 8;
-          }else if(q->queuenumber == 2){
-            q->iterationcount = 16  ;
-          }else if(q->queuenumber == 1){
-            q->iterationcount = 24;
-          }else if(q->queuenumber == 0){
-            q->iterationcount = 500;
-          }
         }
         if(q->iterationcount == 0){ //if it is out of iterations for that level
-          if(q->queuenumber == 3){  //move down in priority
+          if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
             q->queuenumber = 2;
+            q->iterationcount = 16;
           }else if(q->queuenumber == 2){
             q->queuenumber = 1;
+            q->iterationcount = 24;
           }else if(q->queuenumber == 1){
             q->queuenumber = 0;
+            q->iterationcount = 500;
           }else{
             q->queuenumber = 0;
-          }
-          q->idle = 0;  //reset idle time
-          if(q->queuenumber == 2){  //update iteration count for the new level
-            q->iterationcount = 16  ;
-          }else if(q->queuenumber == 1){
-            q->iterationcount = 24;
-          }else if(q->queuenumber == 0){
             q->iterationcount = 500;
           }
+          q->idle = 0;  //reset idle time
         }
         if(q->queuenumber > qn){  //update our max priority level
           qn = q->queuenumber;
