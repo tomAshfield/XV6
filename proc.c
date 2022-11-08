@@ -341,8 +341,14 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
-        if(q->idle > q->iterationcount && q->queuenumber != 3){ //if it has been idle for longer than it needs to run, move up in priority
-          if(q->queuenumber == 2){  //moving up in priority
+        if(q->state != RUNNABLE){
+          continue;
+        }
+        if(q->idle > q->iterationcount){ //if it has been idle for longer than it needs to run, move up in priority
+          if(q->queuenumber == 3){
+            q->queuenumber = 3;
+            q->iterationcount = 8;
+          }else if(q->queuenumber == 2){  //moving up in priority
             q->queuenumber = 3;
             q->iterationcount = 8;
           }else if(q->queuenumber == 1){
@@ -386,11 +392,13 @@ scheduler(void)
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
       p->idle = 0;
-      p->iterationcount--;
+      if(p->iterationcount > 0){
+        p->iterationcount--;
+      }
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
-      cprintf("process [%s:%d] is running\n", p->name, p->pid);
+      cprintf("process [%s:%d] is running, queue: %d, iterations left: %d, idle: %d\n", p->name, p->pid, p->queuenumber, p->iterationcount, p->idle);
 
       swtch(&(c->scheduler), p->context);
       switchkvm();
