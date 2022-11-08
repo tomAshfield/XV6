@@ -339,12 +339,15 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      
+      printf("Made it inside for loop one");
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
+        printf("Made it inside for loop two");
         if(q->state != RUNNABLE){
           continue;
         }
+        printf("some are runnable");
         if(q->idle > q->iterationcount){ //if it has been idle for longer than it needs to run, move up in priority
+          printf("idle for too long");
           if(q->queuenumber == 3){
             q->queuenumber = 3;
             q->iterationcount = 8;
@@ -364,6 +367,7 @@ scheduler(void)
           q->idle = 0;  //reseting idle time
         }
         if(q->iterationcount == 0){ //if it is out of iterations for that level
+          printf("done with this level");
           if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
             q->queuenumber = 2;
             q->iterationcount = 16;
@@ -380,9 +384,11 @@ scheduler(void)
           q->idle = 0;  //reset idle time
         }
         if(q->queuenumber > qn){  //update our max priority level
+          printf("calculating max queue");
           qn = q->queuenumber;
         }
         q->idle++;  //add one tick to every process
+        printf("add idle tick");
       }
       
       if(p->state != RUNNABLE || p->queuenumber != qn) //must be runnable and of the max queue
