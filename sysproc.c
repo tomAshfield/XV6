@@ -96,10 +96,3 @@ sys_crsp(void)
   crsp(); 
   return 0;
 }
-
-int
-sys_stressproc(void)
-{
-  stressproc();
-  return 0;
-}
