@@ -349,7 +349,7 @@ scheduler(void)
         if(q->idle > q->iterationcount){ //if it has been idle for longer than it needs to run, move up in priority
           cprintf("idle: %d\n", q->idle);
           cprintf("iterations left: %d\n", q->iterationcount);
-          cprintf("idle for too long"); //gets here and shouldn't
+          cprintf("idle for too long\n"); //gets here and shouldn't
           if(q->queuenumber == 3){
             q->queuenumber = 3;
             q->iterationcount = 8;
