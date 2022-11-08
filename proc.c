@@ -341,7 +341,7 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       cprintf("Made it inside for loop one");
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
-        cprintf("Made it inside for loop two");
+        //cprintf("Made it inside for loop two");
         if(q->state != RUNNABLE){
           continue;
         }
