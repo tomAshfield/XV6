@@ -90,7 +90,7 @@ found:
   p->pid = nextpid++;
   p->queuenumber = 3;
   p->iterationcount = 8;
-  p->idle;
+  p->idle = 1;
 
   release(&ptable.lock);
 
