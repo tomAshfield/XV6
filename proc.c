@@ -339,6 +339,7 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      cprintf("first loop idle: %d\n", p->idle);
       //cprintf("Made it inside for loop one");
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
         //cprintf("Made it inside for loop two");
