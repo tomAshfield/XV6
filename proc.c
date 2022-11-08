@@ -339,7 +339,7 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      cprintf("Made it inside for loop one");
+      //cprintf("Made it inside for loop one");
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
         //cprintf("Made it inside for loop two");
         if(q->state != RUNNABLE){
@@ -388,7 +388,7 @@ scheduler(void)
           qn = q->queuenumber;
         }
         q->idle++;  //add one tick to every process
-        cprintf("add idle tick");
+        //cprintf("add idle tick");
       }
       
       if(p->state != RUNNABLE || p->queuenumber != qn) //must be runnable and of the max queue
