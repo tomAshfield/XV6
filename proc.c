@@ -342,6 +342,7 @@ scheduler(void)
       cprintf("first loop idle: %d\n", p->idle);
       //cprintf("Made it inside for loop one");
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
+        cprintf("second loop idle: %d\n", q->idle);
         //cprintf("Made it inside for loop two");
         if(q->state != RUNNABLE){
           continue;
