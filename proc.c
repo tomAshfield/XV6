@@ -345,7 +345,7 @@ scheduler(void)
         if(q->state != RUNNABLE){
           continue;
         }
-        cprintf("some are runnable");
+        //cprintf("some are runnable");
         if(q->idle > q->iterationcount){ //if it has been idle for longer than it needs to run, move up in priority
           cprintf("idle for too long");
           if(q->queuenumber == 3){
