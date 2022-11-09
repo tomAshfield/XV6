@@ -369,25 +369,7 @@ scheduler(void)
         }
         
         if(q->iterationcount == 0){ //if it is out of iterations for that level 
-          /*  ****ISSUE IS HERE****
-          if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
-            q->queuenumber = 2;
-            q->iterationcount = 16;
-            q->totaliterations = 16;
-          }else if(q->queuenumber == 2){
-            q->queuenumber = 1;
-            q->iterationcount = 24;
-            q->totaliterations = 24;
-          }else if(q->queuenumber == 1){
-            q->queuenumber = 0;
-            q->iterationcount = 500;
-            q->totaliterations = 500;
-          }else if(q->queuenumber == 0){
-            q->queuenumber = 0;
-            q->iterationcount = 500;
-            q->totaliterations = 500;
-          }
-          */
+        /*
          if(q->queuenumber == 0){
           q->queuenumber = 0;
           q->totaliterations = 500;
@@ -405,6 +387,7 @@ scheduler(void)
           q->totaliterations = 16;
           q->iterationcount = 16;
          }
+         */
           q->idle = 0;  //reset idle time
         }
        //add one tick to every process
