@@ -339,10 +339,10 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      cprintf("first loop idle: %d\n", p->idle);
+      cprintf("first loop idle: %d\n", p->idle);  //is 0 here
       //cprintf("Made it inside for loop one");
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
-        cprintf("second loop idle: %d\n", q->idle);
+        cprintf("second loop idle: %d\n", q->idle); //is 9 here
         //cprintf("Made it inside for loop two");
         if(q->state != RUNNABLE){
           continue;
@@ -368,6 +368,7 @@ scheduler(void)
             q->queuenumber = 0;
             q->iterationcount = 500;
           }
+          cprintf("gets to reset");
           q->idle = 0;  //reseting idle time
         }
         if(q->iterationcount == 0){ //if it is out of iterations for that level
