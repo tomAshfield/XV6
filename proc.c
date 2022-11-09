@@ -383,7 +383,7 @@ scheduler(void)
         
         if(q->iterationcount == 0){ //if it is out of iterations for that level
           //cprintf("done with this level");
-          if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
+          /*if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
             q->queuenumber = 2;
             q->iterationcount = 16;
             q->totaliterations = 16;
@@ -391,7 +391,7 @@ scheduler(void)
             q->queuenumber = 1;
             q->iterationcount = 24;
             q->totaliterations = 24;
-          }/*else if(q->queuenumber == 1){
+          }else */if(q->queuenumber == 1){
             q->queuenumber = 0;
             q->iterationcount = 500;
             q->totaliterations = 500;
@@ -402,7 +402,6 @@ scheduler(void)
             q->iterationcount = 500;
             q->totaliterations = 500;
           }
-          */
           
           q->idle = 0;  //reset idle time
         }
