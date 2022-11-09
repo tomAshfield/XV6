@@ -380,7 +380,7 @@ scheduler(void)
           //cprintf("gets to reset");
           q->idle = 0;  //reseting idle time
         }
-        //start error here
+        /*
         if(q->iterationcount == 0){ //if it is out of iterations for that level
           //cprintf("done with this level");
           if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
@@ -402,6 +402,7 @@ scheduler(void)
           }
           q->idle = 0;  //reset idle time
         }
+        */
        //add one tick to every process
         //cprintf("add idle tick");
       }
