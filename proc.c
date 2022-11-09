@@ -351,7 +351,7 @@ scheduler(void)
           continue;
         }
         //cprintf("some are runnable");
-        /*
+        
         if(q->idle > q->totaliterations){ //if it has been idle for longer than it needs to run, move up in priority
           //cprintf("idle: %d\n", q->idle);
           //cprintf("iterations left: %d\n", q->iterationcount);
@@ -380,6 +380,7 @@ scheduler(void)
           //cprintf("gets to reset");
           q->idle = 0;  //reseting idle time
         }
+        /*
         if(q->iterationcount == 0){ //if it is out of iterations for that level
           //cprintf("done with this level");
           if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
