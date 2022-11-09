@@ -369,7 +369,7 @@ scheduler(void)
         }
         
         if(q->iterationcount == 0){ //if it is out of iterations for that level 
-        /*
+        /*  **ISSUE IS HERE**
          if(q->queuenumber == 0){
           q->queuenumber = 0;
           q->totaliterations = 500;
