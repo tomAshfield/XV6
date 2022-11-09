@@ -369,7 +369,7 @@ scheduler(void)
             q->iterationcount = 500;
           }
           //cprintf("gets to reset");
-          //q->idle = 0;  //reseting idle time
+          q->idle = 0;  //reseting idle time
         }
         if(q->iterationcount == 0){ //if it is out of iterations for that level
           //cprintf("done with this level");
