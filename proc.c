@@ -412,16 +412,15 @@ scheduler(void)
         qn = newQN;
       }
       
-      for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){
-        q->idle++; 
-      }
 
       if(p->state != RUNNABLE || p->queuenumber != qn) //must be runnable and of the max queue
         continue;
-
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
+      for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){
+        q->idle++; 
+      }
       p->idle = 0;
       if(p->iterationcount > 0){
         p->iterationcount--;
