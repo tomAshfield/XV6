@@ -391,13 +391,13 @@ scheduler(void)
             q->queuenumber = 1;
             q->iterationcount = 24;
             q->totaliterations = 24;
-          }else if(q->queuenumber == 1){
+          }/*else if(q->queuenumber == 1){
             q->queuenumber = 0;
             q->iterationcount = 500;
             q->totaliterations = 500;
 
           }
-          /*else{
+          else{
             q->queuenumber = 0;
             q->iterationcount = 500;
             q->totaliterations = 500;
