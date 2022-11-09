@@ -90,7 +90,8 @@ found:
   p->pid = nextpid++;
   p->queuenumber = 3;
   p->iterationcount = 8;
-  p->idle = 1;
+  p->idle = 0;
+  p->totaliterations = 8;
 
   release(&ptable.lock);
 
@@ -341,7 +342,7 @@ scheduler(void)
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       //cprintf("first loop idle: %d\n", p->idle);  //is 0 here
-      //cprintf("Made it inside for loop one");
+      //cprintf("Made it inside for loop one");`
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
         //cprintf("second loop idle: %d\n", q->idle); //is 9 here
         //cprintf("Made it inside for loop two");
@@ -349,25 +350,30 @@ scheduler(void)
           continue;
         }
         //cprintf("some are runnable");
-        if(q->idle > q->iterationcount){ //if it has been idle for longer than it needs to run, move up in priority
+        if(q->idle > q->totaliterations){ //if it has been idle for longer than it needs to run, move up in priority
           //cprintf("idle: %d\n", q->idle);
           //cprintf("iterations left: %d\n", q->iterationcount);
           //cprintf("idle for too long\n"); //gets here and shouldn't
           if(q->queuenumber == 3){
             q->queuenumber = 3;
             q->iterationcount = 8;
+            q->totaliterations = 8;
           }else if(q->queuenumber == 2){  //moving up in priority
             q->queuenumber = 3;
             q->iterationcount = 8;
+            q->totaliterations = 8;
           }else if(q->queuenumber == 1){
             q->queuenumber = 2;
             q->iterationcount = 16;
+            q->totaliterations = 16;
           }else if(q->queuenumber == 0){
             q->queuenumber = 1;
             q->iterationcount = 24;
+            q->totaliterations = 24;
           }else{
             q->queuenumber = 0;
             q->iterationcount = 500;
+            q->totaliterations = 500;
           }
           //cprintf("gets to reset");
           q->idle = 0;  //reseting idle time
@@ -377,15 +383,19 @@ scheduler(void)
           if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
             q->queuenumber = 2;
             q->iterationcount = 16;
+            q->totaliterations = 16;
           }else if(q->queuenumber == 2){
             q->queuenumber = 1;
             q->iterationcount = 24;
+            q->totaliterations = 24;
           }else if(q->queuenumber == 1){
             q->queuenumber = 0;
             q->iterationcount = 500;
+            q->totaliterations = 500;
           }else{
             q->queuenumber = 0;
             q->iterationcount = 500;
+            q->totaliterations = 500;
           }
           q->idle = 0;  //reset idle time
         }
@@ -393,14 +403,14 @@ scheduler(void)
         //cprintf("add idle tick");
       }
       int newQN = 0;
-        for(r = ptable.proc; r < &ptable.proc[NPROC]; r++){
-          if(r->queuenumber > newQN){
-            newQN = r->queuenumber;
-          }
+      for(r = ptable.proc; r < &ptable.proc[NPROC]; r++){
+       if(r->queuenumber > newQN){
+         newQN = r->queuenumber;
         }
-        if(newQN < qn){
-          qn = newQN;
-        }
+      }
+      if(newQN < qn){
+        qn = newQN;
+      }
       
       if(p->state != RUNNABLE || p->queuenumber != qn) //must be runnable and of the max queue
         continue;

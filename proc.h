@@ -52,6 +52,7 @@ struct proc {
   int queuenumber;
   int iterationcount;
   int idle;
+  int totaliterations;
 };
 
 // Process memory is laid out contiguously, low addresses first:
