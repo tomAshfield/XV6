@@ -405,6 +405,8 @@ scheduler(void)
       p->idle = 0;
       if(p->iterationcount > 0){
         p->iterationcount--;
+      }else{
+        p->iterationcount = 0;
       }
       c->proc = p;
       switchuvm(p);
