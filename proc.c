@@ -341,21 +341,13 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      //cprintf("first loop idle: %d\n", p->idle);  //is 0 here
-      //cprintf("Made it inside for loop one");
       
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
-        //cprintf("second loop idle: %d\n", q->idle); //is 9 here
-        //cprintf("Made it inside for loop two");
         if(q->state != RUNNABLE){
           continue;
         }
-        //cprintf("some are runnable");
         
         if(q->idle > q->totaliterations){ //if it has been idle for longer than it needs to run, move up in priority
-          //cprintf("idle: %d\n", q->idle);
-          //cprintf("iterations left: %d\n", q->iterationcount);
-          //cprintf("idle for too long\n"); //gets here and shouldn't
           if(q->queuenumber == 3){
             q->queuenumber = 3;
             q->iterationcount = 8;
@@ -373,12 +365,11 @@ scheduler(void)
             q->iterationcount = 24;
             q->totaliterations = 24;
           }
-          //cprintf("gets to reset");
           q->idle = 0;  //reseting idle time
         }
         
         if(q->iterationcount == 0){ //if it is out of iterations for that level 
-          //cprintf("done with this level");
+          /*  ****ISSUE IS HERE****
           if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
             q->queuenumber = 2;
             q->iterationcount = 16;
@@ -396,6 +387,24 @@ scheduler(void)
             q->iterationcount = 500;
             q->totaliterations = 500;
           }
+          */
+         if(q->queuenumber == 0){
+          q->queuenumber = 0;
+          q->totaliterations = 500;
+          q->iterationcount = 500;
+         }else if(q->queuenumber == 1){
+          q->queuenumber = 0;
+          q->totaliterations = 500;
+          q->iterationcount = 500;
+         }else if(q->queuenumber == 2){
+          q->queuenumber = 1;
+          q->totaliterations = 24;
+          q->iterationcount = 24;
+         }else if(q->queuenumber == 3){
+          q->queuenumber = 2;
+          q->totaliterations = 16;
+          q->iterationcount = 16;
+         }
           q->idle = 0;  //reset idle time
         }
        //add one tick to every process
