@@ -327,8 +327,9 @@ scheduler(void)
 {
   struct proc *p;
   struct proc *q;
+  struct proc *r;
   struct cpu *c = mycpu();
-  int qn = 0;
+  int qn = 3;
   
   c->proc = 0;
   
@@ -388,10 +389,21 @@ scheduler(void)
           }
           q->idle = 0;  //reset idle time
         }
+        int newQN = 0;
+        for(r = ptable.proc; r < &ptable.proc[NPROC]; r++){
+          if(r->queuenumber > newQN){
+            newQN = r->queuenumber;
+          }
+        }
+        if(newQN < qn){
+          qn = newQN;
+        }
+        /*
         if(q->queuenumber > qn){  //update our max priority level
           //cprintf("calculating max queue");
           qn = q->queuenumber;
         }
+        */
         q->idle++;  //add one tick to every process
         //cprintf("add idle tick");
       }
