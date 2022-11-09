@@ -399,7 +399,7 @@ scheduler(void)
           }
           q->idle = 0;  //reset idle time
         }
-        q->idle++;  //add one tick to every process
+       //add one tick to every process
         //cprintf("add idle tick");
       }
       int newQN = 0;
@@ -412,6 +412,10 @@ scheduler(void)
         qn = newQN;
       }
       
+      for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){
+        q->idle++; 
+      }
+
       if(p->state != RUNNABLE || p->queuenumber != qn) //must be runnable and of the max queue
         continue;
 
