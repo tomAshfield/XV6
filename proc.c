@@ -389,7 +389,10 @@ scheduler(void)
           }
           q->idle = 0;  //reset idle time
         }
-        int newQN = 0;
+        q->idle++;  //add one tick to every process
+        //cprintf("add idle tick");
+      }
+      int newQN = 0;
         for(r = ptable.proc; r < &ptable.proc[NPROC]; r++){
           if(r->queuenumber > newQN){
             newQN = r->queuenumber;
@@ -398,15 +401,6 @@ scheduler(void)
         if(newQN < qn){
           qn = newQN;
         }
-        /*
-        if(q->queuenumber > qn){  //update our max priority level
-          //cprintf("calculating max queue");
-          qn = q->queuenumber;
-        }
-        */
-        q->idle++;  //add one tick to every process
-        //cprintf("add idle tick");
-      }
       
       if(p->state != RUNNABLE || p->queuenumber != qn) //must be runnable and of the max queue
         continue;
