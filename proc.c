@@ -339,19 +339,19 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      cprintf("first loop idle: %d\n", p->idle);  //is 0 here
+      //cprintf("first loop idle: %d\n", p->idle);  //is 0 here
       //cprintf("Made it inside for loop one");
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
-        cprintf("second loop idle: %d\n", q->idle); //is 9 here
+        //cprintf("second loop idle: %d\n", q->idle); //is 9 here
         //cprintf("Made it inside for loop two");
         if(q->state != RUNNABLE){
           continue;
         }
         //cprintf("some are runnable");
         if(q->idle > q->iterationcount){ //if it has been idle for longer than it needs to run, move up in priority
-          cprintf("idle: %d\n", q->idle);
-          cprintf("iterations left: %d\n", q->iterationcount);
-          cprintf("idle for too long\n"); //gets here and shouldn't
+          //cprintf("idle: %d\n", q->idle);
+          //cprintf("iterations left: %d\n", q->iterationcount);
+          //cprintf("idle for too long\n"); //gets here and shouldn't
           if(q->queuenumber == 3){
             q->queuenumber = 3;
             q->iterationcount = 8;
@@ -368,11 +368,11 @@ scheduler(void)
             q->queuenumber = 0;
             q->iterationcount = 500;
           }
-          cprintf("gets to reset");
+          //cprintf("gets to reset");
           q->idle = 0;  //reseting idle time
         }
         if(q->iterationcount == 0){ //if it is out of iterations for that level
-          cprintf("done with this level");
+          //cprintf("done with this level");
           if(q->queuenumber == 3){  //move down in priority and update allotted iterations at the level
             q->queuenumber = 2;
             q->iterationcount = 16;
@@ -389,7 +389,7 @@ scheduler(void)
           q->idle = 0;  //reset idle time
         }
         if(q->queuenumber > qn){  //update our max priority level
-          cprintf("calculating max queue");
+          //cprintf("calculating max queue");
           qn = q->queuenumber;
         }
         q->idle++;  //add one tick to every process
