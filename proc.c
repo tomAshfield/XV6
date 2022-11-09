@@ -346,11 +346,9 @@ scheduler(void)
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
         //cprintf("second loop idle: %d\n", q->idle); //is 9 here
         //cprintf("Made it inside for loop two");
-        /*
         if(q->state != RUNNABLE){
           continue;
         }
-        */
         //cprintf("some are runnable");
         if(q->idle > q->totaliterations){ //if it has been idle for longer than it needs to run, move up in priority
           //cprintf("idle: %d\n", q->idle);
