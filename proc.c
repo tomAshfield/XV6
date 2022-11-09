@@ -343,7 +343,7 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       //cprintf("first loop idle: %d\n", p->idle);  //is 0 here
       //cprintf("Made it inside for loop one");
-      /*
+      
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
         //cprintf("second loop idle: %d\n", q->idle); //is 9 here
         //cprintf("Made it inside for loop two");
@@ -351,6 +351,7 @@ scheduler(void)
           continue;
         }
         //cprintf("some are runnable");
+        /*
         if(q->idle > q->totaliterations){ //if it has been idle for longer than it needs to run, move up in priority
           //cprintf("idle: %d\n", q->idle);
           //cprintf("iterations left: %d\n", q->iterationcount);
@@ -402,8 +403,8 @@ scheduler(void)
         }
        //add one tick to every process
         //cprintf("add idle tick");
+        */
       }
-      */
       int newQN = 0;
       for(r = ptable.proc; r < &ptable.proc[NPROC]; r++){
        if(r->queuenumber > newQN){
