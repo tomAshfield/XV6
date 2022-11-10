@@ -341,7 +341,7 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      
+
       for(q = ptable.proc; q < &ptable.proc[NPROC]; q++){   //loop through every process to look for adjustments
         if(q->state != RUNNABLE){
           continue;
@@ -369,7 +369,6 @@ scheduler(void)
         }
         
         if(q->iterationcount == 0){ //if it is out of iterations for that level 
-        /*  **ISSUE IS HERE**
          if(q->queuenumber == 0){
           q->queuenumber = 0;
           q->totaliterations = 500;
@@ -387,7 +386,6 @@ scheduler(void)
           q->totaliterations = 16;
           q->iterationcount = 16;
          }
-         */
           q->idle = 0;  //reset idle time
         }
        //add one tick to every process
